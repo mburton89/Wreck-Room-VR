@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -43,4 +43,4 @@ namespace Unity.Template.VR
             }
         }
     }
-}
+}*/
