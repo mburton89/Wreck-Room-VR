@@ -19,7 +19,7 @@ public class LaunchEnemy : MonoBehaviour
 
     public void launchByFist(float timeFistClenched)
     {
-        print("I'm getting launched");
+        print("I am being launched");
         print(timeFistClenched);
     }
 }

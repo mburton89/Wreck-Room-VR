@@ -9,6 +9,9 @@ public class HandPresence : MonoBehaviour
     public InputDevice targetDevice;
     public Animator handAnimator;
 
+    //fist attack variables
+    [HideInInspector] public bool gripPressed = false;
+
     void Start()
     {
         TryInitialize();
@@ -39,10 +42,22 @@ public class HandPresence : MonoBehaviour
         if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue))
         {
             handAnimator.SetFloat("Grip", gripValue);
+
+            if (gripValue >= 0.9f)
+            {
+                gripPressed = true;
+            }
+
+            else
+            {
+                gripPressed = false;
+            }
+                      
         }
         else
         {
             handAnimator.SetFloat("Grip", 0);
+            gripPressed = false;
         }
     }
 

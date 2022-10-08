@@ -47,7 +47,7 @@ public class HandPresencePhysics : MonoBehaviour
         Vector3 rotationDifferenceInDegree = angleInDegree * rotationAxis;
 
         rb.angularVelocity = (rotationDifferenceInDegree * Mathf.Deg2Rad / Time.fixedDeltaTime);
-
+        
         checkForClench();
     }
 
@@ -55,7 +55,7 @@ public class HandPresencePhysics : MonoBehaviour
 
     private void checkForClench()
     {
-        if(handPresence.GetComponent<HandPresence>().targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
+        if(handPresence.GetComponent<HandPresence>().gripPressed)
         {
             isClenched = true;
             timeClenched += 0.02f;
@@ -73,6 +73,7 @@ public class HandPresencePhysics : MonoBehaviour
         if((collision.gameObject.tag == "Enemy") && isClenched)
         {
             collision.gameObject.GetComponent<LaunchEnemy>().launchByFist(timeClenched);
+            timeClenched = 0f;
         }
     }
 
