@@ -14,7 +14,10 @@ public class HandPresencePhysics : MonoBehaviour
     public GameObject handPresence;
     bool isClenched = false;
     private float timeClenched = 0;
-
+    public GameObject fistAuraPrefab;
+    public Transform fistAuraTargetPosition;
+    private GameObject fistAura;
+    private bool auraSpawned = false;
 
     void Start()
     {
@@ -48,7 +51,12 @@ public class HandPresencePhysics : MonoBehaviour
 
         rb.angularVelocity = (rotationDifferenceInDegree * Mathf.Deg2Rad / Time.fixedDeltaTime);
         
+        //fist attack stuff
         checkForClench();
+        if(auraSpawned)
+        {
+            fistAura.GetComponent<Rigidbody>().velocity = (fistAuraTargetPosition.position - fistAura.transform.position) / Time.fixedDeltaTime;
+        }
     }
 
     //fist attack functions
@@ -59,12 +67,20 @@ public class HandPresencePhysics : MonoBehaviour
         {
             isClenched = true;
             timeClenched += 0.02f;
+            
+            if(auraSpawned == false)
+            {
+                fistAura = Instantiate(fistAuraPrefab, rb.position, rb.rotation);
+                auraSpawned = true;
+            }
         }
 
         else
         {
             isClenched = false;
             timeClenched = 0f;
+            Destroy(fistAura);
+            auraSpawned = false;
         }
     }
 
@@ -78,30 +94,3 @@ public class HandPresencePhysics : MonoBehaviour
     }
 
 }
-
-/*
- * Fist Attack
- * 
- * must track when either fist is clenched and for how long
- * 
- * must detect collision with an enemy while fist is clenched
- * 
- * must launch the opponent depending on the time of a fist clenched
- * 
- * Public variables:
- * the controller for each hand
- * 
- * private variables:
- * float for time fist is clenched
- * bool for if a fist is clenched
- * 
- * functions needed:
- * check if fist is clenched
- *     should update timeClenched and isClenched
- * collision detection function
- *     only if enemy is collided and isClenched is true
- *     calls a "launch by fist" function on collided object
- * 
- * 
- * 
- */
