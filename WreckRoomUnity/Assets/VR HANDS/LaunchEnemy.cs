@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaunchEnemy : MonoBehaviour
 {
     public Rigidbody rb;
+    public AudioSource punchSound;
 
     void Start()
     {
@@ -19,7 +20,6 @@ public class LaunchEnemy : MonoBehaviour
 
     public void launchByFist(float timeFistClenched)
     {
-        print("I am being launched");
-        print(timeFistClenched);
+        punchSound.Play();
     }
 }

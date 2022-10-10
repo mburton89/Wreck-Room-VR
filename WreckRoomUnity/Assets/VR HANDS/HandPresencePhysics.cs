@@ -18,6 +18,7 @@ public class HandPresencePhysics : MonoBehaviour
     public Transform fistAuraTargetPosition;
     private GameObject fistAura;
     private bool auraSpawned = false;
+    public AudioSource chargingSound;
 
     void Start()
     {
@@ -66,12 +67,22 @@ public class HandPresencePhysics : MonoBehaviour
         if(handPresence.GetComponent<HandPresence>().gripPressed)
         {
             isClenched = true;
-            timeClenched += 0.02f;
+            
+            if(timeClenched < 10f)
+            {
+                timeClenched += 0.02f;
+            }
+
+            if(timeClenched > 10f)
+            {
+                timeClenched = 10f;
+            }
             
             if(auraSpawned == false)
             {
                 fistAura = Instantiate(fistAuraPrefab, rb.position, rb.rotation);
                 auraSpawned = true;
+                chargingSound.Play();
             }
         }
 
@@ -81,6 +92,7 @@ public class HandPresencePhysics : MonoBehaviour
             timeClenched = 0f;
             Destroy(fistAura);
             auraSpawned = false;
+            chargingSound.Stop();
         }
     }
 
