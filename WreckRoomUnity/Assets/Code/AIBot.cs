@@ -11,6 +11,8 @@ public class AIBot : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     Vector3 destination;
     public Transform targetToThrowAt;
+    public List<GameObject> ammo;
+    public Transform ammoSpawnPoint;
 
     bool canThrow = true;
 
@@ -55,8 +57,19 @@ public class AIBot : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         transform.LookAt(targetToThrowAt);
         animator.SetTrigger("throw");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.85f);
+        LaunchAmmo();
+        yield return new WaitForSeconds(2.5f);
         SetNewTarget();
         canThrow = true;
+    }
+
+    void LaunchAmmo()
+    {
+        Vector3 directionTowardPlayer = (targetToThrowAt.position - ammoSpawnPoint.position).normalized;
+        int rand = Random.Range(0, ammo.Count);
+        GameObject newAmmo = Instantiate(ammo[rand], ammoSpawnPoint.position, ammoSpawnPoint.rotation, null);
+        newAmmo.GetComponent<Rigidbody>().AddForce(directionTowardPlayer * throwSpeed, ForceMode.Impulse);
+        newAmmo.GetComponent<Rigidbody>().AddForce(Vector3.up * 3.2f, ForceMode.Impulse);
     }
 }
