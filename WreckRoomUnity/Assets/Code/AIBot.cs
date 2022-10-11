@@ -70,6 +70,7 @@ public class AIBot : MonoBehaviour
         int rand = Random.Range(0, ammo.Count);
         GameObject newAmmo = Instantiate(ammo[rand], ammoSpawnPoint.position, ammoSpawnPoint.rotation, null);
         newAmmo.GetComponent<Rigidbody>().AddForce(directionTowardPlayer * throwSpeed, ForceMode.Impulse);
-        newAmmo.GetComponent<Rigidbody>().AddForce(Vector3.up * 3.2f, ForceMode.Impulse);
+        newAmmo.GetComponent<Rigidbody>().AddForce(Vector3.up * 1.6f, ForceMode.Impulse);
+        newAmmo.GetComponent<Ammo>().hasBeenThrown = true;
     }
 }

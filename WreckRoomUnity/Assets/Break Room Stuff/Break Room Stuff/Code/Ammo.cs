@@ -4,18 +4,8 @@ using UnityEngine;
 
 public class Ammo : MonoBehaviour
 {
-    [SerializeField] MeshRenderer colorShift;
-    [SerializeField] Material hitColor;
+    [HideInInspector] public bool hasBeenThrown = false;
     AudioSource audioSource;
-
-    public enum ammoType
-    {
-        basic,
-        breakable,
-        reusable,
-    }
-
-    public ammoType currentAmmoType;
 
     private void Awake()
     {
@@ -24,27 +14,23 @@ public class Ammo : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "SpawnZone" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Ammo")
+        if (collision.gameObject.CompareTag("Floor") && hasBeenThrown)
         {
-            HandleImpact();
-        }
-    }
-
-    void HandleImpact()
-    {
-        if (currentAmmoType == ammoType.basic)
-        {
-            //Nothing?
-        }
-        else if (currentAmmoType == ammoType.breakable)
-        {
-            Destroy(this.gameObject);
-        }
-        else if (currentAmmoType == ammoType.reusable)
-        {
-            colorShift.material = hitColor;
+            Destroy(gameObject, 3);
         }
 
-        //audioSource.Play();
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            print("ENEMY HIT");
+            audioSource.Play();
+            GameManager.Instance.HandleEnemyHit();
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            print("Player HIT");
+            audioSource.Play();
+            GameManager.Instance.GameOver();
+        }
     }
 }

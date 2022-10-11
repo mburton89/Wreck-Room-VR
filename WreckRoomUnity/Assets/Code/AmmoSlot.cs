@@ -6,6 +6,7 @@ public class AmmoSlot : MonoBehaviour
 {
     [SerializeField] GameObject ammoPrefab;
     GameObject currentAmmo;
+    bool canRespawn = true;
 
     void Start()
     {
@@ -14,7 +15,7 @@ public class AmmoSlot : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == currentAmmo)
+        if (other.gameObject == currentAmmo && canRespawn)
         {
             StartCoroutine(DelayedRespawn());
         }
@@ -27,7 +28,9 @@ public class AmmoSlot : MonoBehaviour
 
     private IEnumerator DelayedRespawn()
     {
+        canRespawn = false;
         yield return new WaitForSeconds(5f);
         RespawnAmmo();
+        canRespawn = true;
     }
 }
