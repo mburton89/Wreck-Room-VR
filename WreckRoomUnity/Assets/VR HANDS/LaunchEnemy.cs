@@ -34,9 +34,7 @@ public class LaunchEnemy : MonoBehaviour
     IEnumerator stopLaunch(float punchPower)
     {
         gettingLaunched = true;
-        rb.useGravity = false;
         yield return new WaitForSeconds(punchPower / 2);
         gettingLaunched = false;
-        rb.useGravity = true;
     }
 }
