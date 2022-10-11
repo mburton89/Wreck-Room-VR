@@ -57,6 +57,7 @@ public class HandPresencePhysics : MonoBehaviour
         if(auraSpawned)
         {
             fistAura.GetComponent<Rigidbody>().velocity = (fistAuraTargetPosition.position - fistAura.transform.position) / Time.fixedDeltaTime;
+            fistAura.GetComponent<Rigidbody>().angularVelocity = (rotationDifferenceInDegree * Mathf.Deg2Rad / Time.fixedDeltaTime);
         }
     }
 

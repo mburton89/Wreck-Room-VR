@@ -10,7 +10,7 @@ public class FistAura : MonoBehaviour
     {
         if ((collider.gameObject.tag == "Enemy") && handPhysics.isClenched)
         {
-            collider.gameObject.GetComponent<LaunchEnemy>().launchByFist(handPhysics.timeClenched);
+            collider.gameObject.GetComponent<LaunchEnemy>().launchByFist(handPhysics.timeClenched, this.transform);
             handPhysics.timeClenched = 0f;
         }
     }
