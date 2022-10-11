@@ -12,8 +12,8 @@ public class HandPresencePhysics : MonoBehaviour
 
     //Fist Attack Variables
     public GameObject handPresence;
-    bool isClenched = false;
-    private float timeClenched = 0;
+    [HideInInspector] public bool isClenched = false;
+    [HideInInspector] public float timeClenched = 0;
     public GameObject fistAuraPrefab;
     public Transform fistAuraTargetPosition;
     private GameObject fistAura;
@@ -81,6 +81,7 @@ public class HandPresencePhysics : MonoBehaviour
             if(auraSpawned == false)
             {
                 fistAura = Instantiate(fistAuraPrefab, rb.position, rb.rotation);
+                fistAura.GetComponent<FistAura>().handPhysics = this;
                 auraSpawned = true;
                 chargingSound.Play();
             }
@@ -96,6 +97,7 @@ public class HandPresencePhysics : MonoBehaviour
         }
     }
 
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         if((collision.gameObject.tag == "Enemy") && isClenched)
@@ -104,5 +106,5 @@ public class HandPresencePhysics : MonoBehaviour
             timeClenched = 0f;
         }
     }
-
+    */
 }
